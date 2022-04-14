@@ -1,5 +1,5 @@
 var stockUrl = "https://www.alphavantage.co/query?"
-var subBtn = $("#submitBtn");
+var subBtn = $("#stockBtn");
 var apiKey = "U10T2CB0VFD6519Q"
 var params = {
     apiKey: "&apikey=",
@@ -24,3 +24,19 @@ function test(event) {
 }
 
 subBtn.on("click", test)
+var myKey = "31f3c7fba0e24b5ad83d1dc92397b585";
+var myUnits = "imperial"
+function test2(event){
+    event.preventDefault(); 
+{
+      fetch(`https://api.openweathermap.org/data/2.5/weather?q=london&appid=${myKey}&units=${myUnits}`)
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(data) {
+            console.log(data);
+        })
+    }
+}
+var weatherBtn = $("#weatherBtn");
+weatherBtn.on("click", test2);
