@@ -26,8 +26,20 @@
       </form>
     </div>
     <div class="searchStock">  
-        <button type="submit" id="stockBtn">Stock Button</button>
-       SearchStock</div>
+        <form action="#">
+            <label for="stock-types">Stock Types</label>
+            <select name="Stock types" id="stock-types">
+            <option value = "" selected disabled hidden> Choose a Stock Type</option>
+            <option value="GOOG">Google</option>
+              <option value="AMZN">Amazon</option>
+              <option value="TSLA">Tesla</option>
+              <option value="AAPL">Apple</option>
+              <option value="JPM">JP Morgan Chase</option>
+            </select>
+            <input class ="stock-input"type="submit" value="Submit" />
+        
+      </form>
+    </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="./assets/main.js"></script>
