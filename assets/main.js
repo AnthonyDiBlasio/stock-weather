@@ -82,6 +82,10 @@ function getWeather(event) {
         console.log(data.forecast.forecastday[0].day.avgtemp_f + "\xB0F");
         console.log(data.forecast.forecastday[0].day.condition["text"]);
         checkTemp(data);
+        console.log(moment().subtract(7, "days"));
+        for(var i = 7; i > 0; i--) {
+            console.log(moment().subtract(i, "day").format("YYYY-MM-DD"))
+        }
     })
 }
 
@@ -101,6 +105,7 @@ function checkTemp(data) {
 }
 
 //  Stocks Functions
+console.log(moment().subtract(7, "days"));
 
 
 
