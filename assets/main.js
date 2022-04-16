@@ -83,6 +83,9 @@ function getWeather(event) {
         console.log(data.forecast.forecastday[0].day.condition["text"]);
         checkTemp(data);
         console.log(moment().subtract(7, "days"));
+        for(var i = 8; i > 1; i--) {
+            console.log(moment().subtract(i-1, "day").format("YYYY-MM-DD"))
+        }
     })
 }
 
