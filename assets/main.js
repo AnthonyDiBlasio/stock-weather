@@ -13,7 +13,7 @@ var apiKey = "U10T2CB0VFD6519Q"
 var params = {
     apiKey: "&apikey=",
     sym: "&symbol=",
-    func: "function=",
+    func: "function=TIME_SERIES_DAILY",
 }
 
 var weatherBtn = $(".weatherBtn")
@@ -54,18 +54,42 @@ var weatherURL = "http://api.weatherapi.com/v1/history.json?key=9b478461b78c4e22
 
 //  Weather Functions
 
-function test(event) {
+function getStocks(event) {
     event.preventDefault();
-    fetch(stockUrl + params.func+ "TIME_SERIES_WEEKLY" + params.sym + "IBM" + params.apiKey + apiKey)
+    var stocks = params.sym
+    fetch(stockUrl + params.func+ params.sym + "IBM" + params.apiKey + apiKey)
         .then(function (response) {
             return response.json();
         })
         .then(function (data) {
-            console.log(data);
-            console.log(data["Meta Data"]);
-            console.log(data["Meta Data"]["1. Information"]);
-            console.log(data["Weekly Time Series"]);
-            console.log(data["Weekly Time Series"]["1999-11-12"]);
+            // console.log(data);
+            // console.log(data["Meta Data"]["1. Information"]);
+            // console.log(moment().subtract(7, "days"));
+            var last7Days = [];
+        for(var i = 0; i < 7; i++) {
+
+            var currentDate = moment().subtract(i, "day").format("YYYY-MM-DD")
+            last7Days.push(currentDate);
+            // if (currentDate== data["Time Series (Daily)"][i]){
+
+            //     console.log(data["Time Series (Daily)"])
+                
+            // }
+        }
+        console.log(last7Days);
+        var currentDate = moment().subtract(1, "day").format("YYYY-MM-DD")
+        console.log(currentDate);
+        console.log(data["Time Series (Daily)"])
+    //    for ( var i = data["Time Series (Daily)"].length-1; i > data["Time Series (Daily)"].length-7;i--){
+    //     console.log(data["Time Series (Daily)"][i]);
+    //    }
+    //     console.log(Object.keys(data["Time Series (Daily)"]));
+        for(var key of Object.keys(data["Time Series (Daily)"])){
+            if(last7Days.includes(key)){
+                console.log(data["Time Series (Daily)"][key])
+            }
+        }
+
 
         });
 }
@@ -84,7 +108,7 @@ function getWeather(event) {
         checkTemp(data);
         console.log(moment().subtract(7, "days"));
         for(var i = 7; i > 0; i--) {
-            console.log(moment().subtract(i, "day").format("YYYY-MM-DD"))
+            console.log(data["Daily Time Series"][moment().subtract(i, "day").format("YYYY-MM-DD")])
         }
     })
 }
@@ -111,11 +135,9 @@ console.log(moment().subtract(7, "days"));
 
 
 // Event Listeners
-subBtn.on("click", test)
 weatherBtn.on("click", function(event){
-    test(event);
     getWeather(event);
+    
 })
-
-// var weatherBtn = $("#weatherBtn");
-// weatherBtn.on("click", test2);
+var stockInput = $(".stock-input")
+stockInput.on("click", getStocks)
