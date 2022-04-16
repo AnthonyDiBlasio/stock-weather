@@ -110,7 +110,5 @@ subBtn.on("click", test)
 weatherBtn.on("click", function(event){
     test(event);
     getWeather(event);
+    
 })
-
-// var weatherBtn = $("#weatherBtn");
-// weatherBtn.on("click", test2);
