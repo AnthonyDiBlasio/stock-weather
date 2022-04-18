@@ -153,7 +153,7 @@ function getWeather(event) {
     // })
 }
 
-function checkTemp(data) {
+function checkTemp(data) { 
     var temp =data.forecast.forecastday[0].day.avgtemp_f
     if (temp < 32) {
         console.log("Freezing");
