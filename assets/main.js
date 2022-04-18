@@ -1,11 +1,11 @@
-var stockUrl = "https://www.alphavantage.co/query?"
-var subBtn = $("#stockBtn");
-var apiKey = "U10T2CB0VFD6519Q"
-var params = {
-    apiKey: "&apikey=",
-    sym: "&symbol=",
-    func: "function=",
-}
+// var stockUrl = "https://www.alphavantage.co/query?"
+// var subBtn = $("#stockBtn");
+// var apiKey = "U10T2CB0VFD6519Q"
+// var params = {
+//     apiKey: "&apikey=",
+//     sym: "&symbol=",
+//     func: "function=",
+// }
 
 var stockUrl = "https://www.alphavantage.co/query?"
 var subBtn = $("#submitBtn");
@@ -17,7 +17,9 @@ var params = {
 }
 
 var weatherBtn = $(".weatherBtn")
-var weatherURL = "http://api.weatherapi.com/v1/history.json?key=9b478461b78c4e22b3e04825221204&q=Philadelphia&dt=2022-04-10"
+var weatherURL = "http://api.weatherapi.com/v1/history.json?key=9b478461b78c4e22b3e04825221204&q=Philadelphia"
+
+var weatherVal = $("#weather-types")
 
 // function test(event) {
 //     event.preventDefault();
@@ -54,8 +56,8 @@ var weatherURL = "http://api.weatherapi.com/v1/history.json?key=9b478461b78c4e22
 
 //  Weather Functions
 
-function getStocks(event) {
-    event.preventDefault();
+function getStocks(data) {
+    // event.preventDefault();
     var stocks = params.sym
     fetch(stockUrl + params.func+ params.sym + "IBM" + params.apiKey + apiKey)
         .then(function (response) {
@@ -94,23 +96,61 @@ function getStocks(event) {
         });
 }
 
+weatherCondDates = []
+
+function checkWeatherCond(event) {
+    event.preventDefault();
+    console.log(event);
+    console.log(weatherVal.val())
+    if (weatherVal === "null") {
+        alert("you must choose a weather condition")
+    } else if(weatherVal.val() === "hot") {
+        getWeather()
+    }
+    // fetch(weatherURL)
+    // .then(function(response) {
+    //     return response.json();
+    // })
+    // .then(function(data){
+    //     console.log(data);
+    //     console.log(data.forecast.forecastday[0].date);
+    //     console.log(data.forecast.forecastday[0].day.avgtemp_f + "\xB0F");
+    //     console.log(data.forecast.forecastday[0].day.condition["text"]);
+    //     checkTemp(data);
+    //     console.log(moment().subtract(1, "day").format("YYYY-MM-DD"))
+        // console.log(data["Daily Time Series"])
+        // console.log(moment().subtract(7, "days"));
+}
+
+cityList = ['new york', 'los angeles', 'chicago', 'phoenix', 'houston']
 function getWeather(event) {
     event.preventDefault();
-    fetch(weatherURL)
-    .then(function(response) {
-        return response.json();
-    })
-    .then(function(data){
-        console.log(data);
-        console.log(data.forecast.forecastday[0].date);
-        console.log(data.forecast.forecastday[0].day.avgtemp_f + "\xB0F");
-        console.log(data.forecast.forecastday[0].day.condition["text"]);
-        checkTemp(data);
-        console.log(moment().subtract(7, "days"));
-        for(var i = 7; i > 0; i--) {
-            console.log(data["Daily Time Series"][moment().subtract(i, "day").format("YYYY-MM-DD")])
+    for(var i = 0; i < cityList.length; i++) {
+        var weatherURL = `http://api.weatherapi.com/v1/history.json?key=9b478461b78c4e22b3e04825221204&q=${cityList[i]}`
+        // fetch(weatherURL)
+        // .then(function(response) {
+        //     return response.json();
+        // })
+        // .then(function(data){
+        //     console.log(data)
+        // })
+        console.log(cityList[i])
+        console.log(weatherURL)
+        for(var j = 6; j > 0; j--) {
+            fetch(weatherURL + `&dt=${moment().subtract(j, "day").format("YYYY-MM-DD")}`)
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(data){
+                console.log(data)
+                checkTemp(data)
+                getStocks(data)
+            })
+            
+            // console.log(data["Daily Time Series"][moment().subtract(i, "day").format("YYYY-MM-DD")])
         }
-    })
+    }
+    // })
 }
 
 function checkTemp(data) {
@@ -128,16 +168,19 @@ function checkTemp(data) {
     }
 }
 
+// function cheackWeatherCond(weatherVal) {
+//     if(weatherVal === "hot") {
+
+//     }
+// }
 //  Stocks Functions
-console.log(moment().subtract(7, "days"));
+// console.log(moment().subtract(7, "days"));
 
 
 
 
 // Event Listeners
-weatherBtn.on("click", function(event){
-    getWeather(event);
-    
-})
+weatherBtn.on("click", getWeather) 
+
 var stockInput = $(".stock-input")
 stockInput.on("click", getStocks)
