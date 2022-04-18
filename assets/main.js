@@ -58,8 +58,9 @@ var weatherVal = $("#weather-types")
 
 function getStocks(data) {
     // event.preventDefault();
-    var stocks = params.sym
-    fetch(stockUrl + params.func+ params.sym + "IBM" + params.apiKey + apiKey)
+    var stocks = ["GOOG","AMZN","TSLA","AAPL","JPM"]
+    for(var i = 0;i<stocks.length;i++){
+        fetch(stockUrl + params.func+ params.sym + stocks[i] + params.apiKey + apiKey)
         .then(function (response) {
             return response.json();
         })
@@ -95,6 +96,9 @@ function getStocks(data) {
 
         });
 }
+        
+    }
+    
 
 weatherCondDates = []
 
@@ -153,7 +157,12 @@ function getWeather(event) {
     // })
 }
 
+<<<<<<< HEAD
 function checkTemp(data) { 
+=======
+
+function checkTemp(data) {
+>>>>>>> e6fc281a6d08edd13ef9138c804b3523e6f6c90a
     var temp =data.forecast.forecastday[0].day.avgtemp_f
     if (temp < 32) {
         console.log("Freezing");
