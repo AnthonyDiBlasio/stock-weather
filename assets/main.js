@@ -68,33 +68,67 @@ function checkWeatherCond(data) {
 
 //  Stocks Functions
 
-function getStocks(data) {
-    var stocks = ["GOOG","AMZN","TSLA","AAPL","JPM"]
-    for(var i = 0;i<stocks.length;i++){
+// this function will append the date to the html
+function getDates(data) {
+    for(var i =0; i < newYork.length; i++) {
+        console.log(newYork[i]);
+        console.log(data["Meta Data"]["2. Symbol"]);
+        console.log(data["Time Series (Daily)"][newYork[i]]);
+    }
+}
+
+function getStocks() {
+    // event.preventDefault()
+    var stocks = ["JPM", "VZ", "C", "MET", "PFE"]
+    for(var i = 0; i<stocks.length; i++){
         fetch(stockUrl + params.func+ params.sym + stocks[i] + params.apiKey + apiKey)
         .then(function (response) {
             return response.json();
         })
         .then(function (data) {
-            var last7Days = [];
-            for(var i = 0; i < 7; i++) {
+            // console.log(data["Time Series (Daily)"]["2022-04-18"])
+            getDates(data)
+            // console.log(data)
+            
+            // console.log(data["Time Series (Daily)"])
+            // console.log(data["Time Series (Daily)"]["2022-04-18"])
+           
+            // console.log(data["Meta Data"]["Symbol"])
+            // var dailyStocks = data["Time Series (Daily)"]
+            // // for(var j = 0; j < newYork.length; j++) {
+            // //     // console.log(newYork)
+            //     if(newYork.includes(dailyStocks[i])) {
+            //         console.log("fuck yea")
+            // //     console.log(data["Time Series (Daily)"])
+            //     }
+            //         // var last7Days = [];
+            // for(var i = 0; i < 7; i++) {
 
-            var currentDate = moment().subtract(i, "day").format("YYYY-MM-DD")
-            last7Days.push(currentDate);
-            }
+            // var currentDate = moment().subtract(i, "day").format("YYYY-MM-DD")
+            // last7Days.push(currentDate);
+            // }
+        //     var currentDate = moment().subtract(1, "day").format("YYYY-MM-DD")
+        //     console.log(currentDate);
+        //     console.log(data["Time Series (Daily)"])
+        //     for(var key of Object.keys(data["Time Series (Daily)"])){
+        //         if(last7Days.includes(key)){
+        //             console.log(data["Time Series (Daily)"][key])
+        //         }
+            
+        // }
         })
-        console.log(last7Days);
-        var currentDate = moment().subtract(1, "day").format("YYYY-MM-DD")
-        console.log(currentDate);
-        console.log(data["Time Series (Daily)"])
-        for(var key of Object.keys(data["Time Series (Daily)"])){
-            if(last7Days.includes(key)){
-                console.log(data["Time Series (Daily)"][key])
-            }
-        }
+        // console.log(last7Days);
+        
     }
     
 }
+
+// function getDates(data) {
+//     for(var i =0; i < newYork.length; i++) {
+//         console.log(newYork[i])
+//         console.log(data["Time Series (Daily)"][newYork[i]])
+//     }
+// }
     
 // Render Function
 
@@ -104,25 +138,27 @@ function displayResults(event) {
     event.preventDefault();
     console.log(event);
     newYork= [];
-    var weatherURL = `http://api.weatherapi.com/v1/history.json?key=9b478461b78c4e22b3e04825221204&q=philadelphia}`
-    for(var j = 6; j > 0; j--) {
-        fetch(weatherURL + `&dt=${moment().subtract(j, "day").format("YYYY-MM-DD")}`)
+    var weatherURL = `http://api.weatherapi.com/v1/history.json?key=9b478461b78c4e22b3e04825221204&q=new york}`
+    for(var i = 6; i > 0; i--) {
+        fetch(weatherURL + `&dt=${moment().subtract(i, "day").format("YYYY-MM-DD")}`)
         .then(function(response) {
             return response.json();
         })
         .then(function(data){
-
             if (weatherVal.val() === null) {
                 alert("you must choose a weather condition");
                 return;
             } else {
                 console.log(data)
                 checkWeatherCond(data);
+                
             }            
         })
     }
+    getStocks()
 }
 
 // Event Listeners
 
 $(".genData").on("click", displayResults)
+$(".stock-input").on("click", getStocks)
