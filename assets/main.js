@@ -116,9 +116,7 @@ function getStocks() {
 
 var newYork= []
 
-function displayResults(event) {
-    event.preventDefault();
-    console.log(event);
+function displayResults() {
     newYork= [];
     var weatherURL = `http://api.weatherapi.com/v1/history.json?key=9b478461b78c4e22b3e04825221204&q=new york}`
     for(var i = 6; i > 0; i--) {
@@ -132,11 +130,13 @@ function displayResults(event) {
                 checkWeatherCond(data);         
         })
     }
-    // getStocks()
     $(".weatherParam").on("click", getStocks)
+        
+    
 }
 
 // Event Listeners
 
-$(".genData").on("click", displayResults)
+// displayResults();
 // $(".weatherParam").on("click", getStocks)
+$(".weatherParam").on("click", displayResults)
