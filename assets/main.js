@@ -75,13 +75,18 @@ function checkWeatherCond(data) {
 //  Stocks Functions
 
 // this function will append the date to the html
+
+
 function getDates(data) {
+    stockDates = Object.keys(data["Time Series (Daily)"])
     for(var i =0; i < newYork.length; i++) {
-        console.log(data)
-        $(`#${data["Meta Data"]["2. Symbol"]}`).append(`<h1>${newYork[i]}</h1>`);
-        // $("#content3").append(data["Time Series (Daily)"][newYork[i][".1 open"]]);
-        $(`#${data["Meta Data"]["2. Symbol"]}`).append(`<h5>open:${data["Time Series (Daily)"][newYork[i]]["1. open"]}</h5>`);
-        $(`#${data["Meta Data"]["2. Symbol"]}`).append(`<h6>close:${data["Time Series (Daily)"][newYork[i]]["4. close"]}</h6>`);
+        
+        if(stockDates.includes(newYork[i])) {
+            $(`#${data["Meta Data"]["2. Symbol"]}`).append(`<h1>${newYork[i]}</h1>`);
+            // $("#content3").append(data["Time Series (Daily)"][newYork[i][".1 open"]]);
+            $(`#${data["Meta Data"]["2. Symbol"]}`).append(`<h5>open:${data["Time Series (Daily)"][newYork[i]]["1. open"]}</h5>`);
+            $(`#${data["Meta Data"]["2. Symbol"]}`).append(`<h5>close:${data["Time Series (Daily)"][newYork[i]]["4. close"]}</h5>`);
+        }
     }
 }
 
@@ -95,12 +100,11 @@ function getStocks() {
         })
         .then(function (data) {
             // console.log(data["Time Series (Daily)"]["2022-04-18"])
-<<<<<<< HEAD
+
             console.log(data)
-=======
-            // $("#content3").append(data["Time Series (Daily)"][newYork[i]]);
+  // $("#content3").append(data["Time Series (Daily)"][newYork[i]]);
             $(".card").append(`<div id = ${data["Meta Data"]["2. Symbol"]}><h1>${data["Meta Data"]["2. Symbol"]}</h1></div>`);
->>>>>>> 378e8a9073642ed029a63ec5cdc439ab091d2128
+
             getDates(data)
          
         })
