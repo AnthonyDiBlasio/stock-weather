@@ -87,6 +87,7 @@ function getStocks() {
         })
         .then(function (data) {
             // console.log(data["Time Series (Daily)"]["2022-04-18"])
+            console.log(data)
             getDates(data)
             // console.log(data)
             
