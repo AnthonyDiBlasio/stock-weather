@@ -1,6 +1,8 @@
 var stockUrl = "https://www.alphavantage.co/query?"
 var subBtn = $("#submitBtn");
+//var apikey2=""
 var apiKey = "U10T2CB0VFD6519Q"
+
 var weatherBtn = $(".weatherBtn")
 var weatherVal = $("#weather-types")
 var params = {
@@ -71,9 +73,12 @@ function checkWeatherCond(data) {
 // this function will append the date to the html
 function getDates(data) {
     for(var i =0; i < newYork.length; i++) {
-        console.log(newYork[i]);
-        console.log(data["Meta Data"]["2. Symbol"]);
-        console.log(data["Time Series (Daily)"][newYork[i]]);
+        console.log(data)
+        $(`#${data["Meta Data"]["2. Symbol"]}`).append(`<h1>${newYork[i]}</h1>`);
+        // 
+        // $("#content3").append(data["Time Series (Daily)"][newYork[i][".1 open"]]);
+        $(`#${data["Meta Data"]["2. Symbol"]}`).append(`<h5>open:${data["Time Series (Daily)"][newYork[i]]["1. open"]}</h5>`);
+        $(`#${data["Meta Data"]["2. Symbol"]}`).append(`<h6>close:${data["Time Series (Daily)"][newYork[i]]["4. close"]}</h6>`);
     }
 }
 
@@ -87,50 +92,16 @@ function getStocks() {
         })
         .then(function (data) {
             // console.log(data["Time Series (Daily)"]["2022-04-18"])
+            // $("#content3").append(data["Time Series (Daily)"][newYork[i]]);
+            $(".card").append(`<div id = ${data["Meta Data"]["2. Symbol"]}><h1>${data["Meta Data"]["2. Symbol"]}</h1></div>`);
             getDates(data)
-            // console.log(data)
-            
-            // console.log(data["Time Series (Daily)"])
-            // console.log(data["Time Series (Daily)"]["2022-04-18"])
-           
-            // console.log(data["Meta Data"]["Symbol"])
-            // var dailyStocks = data["Time Series (Daily)"]
-            // // for(var j = 0; j < newYork.length; j++) {
-            // //     // console.log(newYork)
-            //     if(newYork.includes(dailyStocks[i])) {
-            //         console.log("fuck yea")
-            // //     console.log(data["Time Series (Daily)"])
-            //     }
-            //         // var last7Days = [];
-            // for(var i = 0; i < 7; i++) {
-
-            // var currentDate = moment().subtract(i, "day").format("YYYY-MM-DD")
-            // last7Days.push(currentDate);
-            // }
-        //     var currentDate = moment().subtract(1, "day").format("YYYY-MM-DD")
-        //     console.log(currentDate);
-        //     console.log(data["Time Series (Daily)"])
-        //     for(var key of Object.keys(data["Time Series (Daily)"])){
-        //         if(last7Days.includes(key)){
-        //             console.log(data["Time Series (Daily)"][key])
-        //         }
-            
-        // }
+         
         })
-        // console.log(last7Days);
-        
+       
     }
     
 }
 
-// function getDates(data) {
-//     for(var i =0; i < newYork.length; i++) {
-//         console.log(newYork[i])
-//         console.log(data["Time Series (Daily)"][newYork[i]])
-//     }
-// }
-    
-// Render Function
 
 var newYork= []
 
@@ -146,7 +117,9 @@ function displayResults(event) {
         })
         .then(function(data){
             if (weatherVal.val() === null) {
-                alert("you must choose a weather condition");
+                // $( function() {
+                //     $( "#dialog" ).dialog();
+                //   } );
                 return;
             } else {
                 console.log(data)
