@@ -1,7 +1,11 @@
 var stockUrl = "https://www.alphavantage.co/query?"
 var subBtn = $("#submitBtn");
-//var apikey2=""
+var apiKey2=" BJHAE5GE3G9E1K2J"
 var apiKey = "U10T2CB0VFD6519Q"
+var hot = $("#hot");
+var cold = $("#cold");
+var rainy = $("#rainy");
+var snow = $("#snow");
 
 var weatherBtn = $(".weatherBtn")
 var weatherVal = $("#weather-types")
@@ -57,13 +61,13 @@ function checkTemp(data) {
 function checkWeatherCond(data) {
     if (weatherVal === "null") {
         alert("you must choose a weather condition")
-    } else if(weatherVal.val() === "hot") {
+    } else if(hot.val() === "hot") {
         checkTemp(data)
-    } else if(weatherVal.val() === "cold") {
+    } else if(cold.val() === "cold") {
         checkTemp(data)
-    } else if(weatherVal.val() === "rainy") {
+    } else if(rainy.val() === "rainy") {
         checkConditionRain(data);
-    } else if(weatherVal.val() === "snow") {
+    } else if(snow.val() === "snow") {
         checkConditionSnow(data)
     }
 }
@@ -75,7 +79,6 @@ function getDates(data) {
     for(var i =0; i < newYork.length; i++) {
         console.log(data)
         $(`#${data["Meta Data"]["2. Symbol"]}`).append(`<h1>${newYork[i]}</h1>`);
-        // 
         // $("#content3").append(data["Time Series (Daily)"][newYork[i][".1 open"]]);
         $(`#${data["Meta Data"]["2. Symbol"]}`).append(`<h5>open:${data["Time Series (Daily)"][newYork[i]]["1. open"]}</h5>`);
         $(`#${data["Meta Data"]["2. Symbol"]}`).append(`<h6>close:${data["Time Series (Daily)"][newYork[i]]["4. close"]}</h6>`);
@@ -116,22 +119,16 @@ function displayResults(event) {
             return response.json();
         })
         .then(function(data){
-            if (weatherVal.val() === null) {
-                // $( function() {
-                //     $( "#dialog" ).dialog();
-                //   } );
-                return;
-            } else {
+            
                 console.log(data)
-                checkWeatherCond(data);
-                
-            }            
+                checkWeatherCond(data);         
         })
     }
-    getStocks()
+    // getStocks()
+    $(".weatherParam").on("click", getStocks)
 }
 
 // Event Listeners
 
 $(".genData").on("click", displayResults)
-$(".stock-input").on("click", getStocks)
+// $(".weatherParam").on("click", getStocks)
