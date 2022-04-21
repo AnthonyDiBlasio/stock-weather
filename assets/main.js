@@ -51,7 +51,7 @@ function checkConditionSnow(data) {
             //     snowyDays.push(data.forecast.forecastday[0].date)
             // };
         } else {
-            modal.style.display = "block";
+           console.log("no condition met")
         }
     }
     return
@@ -65,29 +65,8 @@ function checkTempCold(data) {
         console.log("Cold");
         newYork.push(data.forecast.forecastday[0].date)
     } else {
-     // Get the modal
-var modal = document.getElementById("myModal");
-
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
-
-// When the user clicks on the button, open the modal
-$(".genData").onclick = function() {
-  modal.style.display = "block";
-}
-
-// When the user clicks on <span> (x), close the modal
-span.on = function() {
-  modal.style.display = "none";
-}
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
-}
-    };
+     console.log("no condition met");
+    }
 }
 
 function checkTempHot(data) {
@@ -138,28 +117,27 @@ async function getStocks() {
     }
 }
 
-// function storeStocks(data) {
-//     var stockDates = Object.keys(data["Time Series (Daily)"]).slice(0, 7);
-//     $("#past-stocks").empty()
-//     for(var i = 0; i<stockDates.length; i++) {
-//         $("#past-stocks").append(`<li><button>${stockDates[i]}</button></li>`)
-//     }
-//     console.log(stockDates)
-//     for(var i = 0; i<stocks.length; i++) {
-//         console.log(stocks[i])
-//         for(var j =0; j <stockDates.length; j++) {
-//             var stockKey = data["Meta Data"]["2. Symbol"] + " " + stockDates[j];
-//             var dailyValues = data["Time Series (Daily)"][stockDates[j]]
-//             localStorage.setItem(stockKey, JSON.stringify(dailyValues))
-//         }
-//     }
-// }
+function storeStocks(data) {
+    var stockDates = Object.keys(data["Time Series (Daily)"]).slice(0, 7);
+    $("#past-stocks").empty()
+    for(var i = 0; i<stockDates.length; i++) {
+        $("#past-stocks").append(`<li><button>${stockDates[i]}</button></li>`)
+    }
+    console.log(stockDates)
+    for(var i = 0; i<stocks.length; i++) {
+        console.log(stocks[i])
+        for(var j =0; j <stockDates.length; j++) {
+            var stockKey = data["Meta Data"]["2. Symbol"] + " " + stockDates[j];
+            var dailyValues = data["Time Series (Daily)"][stockDates[j]]
+            localStorage.setItem(stockKey, JSON.stringify(dailyValues))
+        }
+    }
+}
 
-// function historyData(event) {
-//     event.preventDeafault();
+function historyData(event) {
+    event.preventDeafault();
     
-
-// }
+}
 
 // Display functions
 function storeLastCall() {
@@ -201,16 +179,16 @@ async function displayResults(event) {
                 storeLastCall()
                 console.log("snowy!")
          
-            // storeLastCall()
-        }
+              }  // storeLastCall()
+        })
         // storeLastCall()
-    })
+    }
     // storeLastCall()
 }
 
 function displayHistory(event) {
     event.preventDefault();
-}
+
 
 
 function init() {
@@ -222,13 +200,13 @@ function init() {
 //     event.preventDefault();
     
 
-// }
+
 
 // Event Listeners
 // storeLastCall()
 // init()
 
-$(".genData").on("click", displayResults);{
-    init()
-}
+$(".genData").on("click", displayResults);
 // $(".weatherParam").on("click", getStocks)
+init()
+}
