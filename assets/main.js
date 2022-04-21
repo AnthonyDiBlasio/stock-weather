@@ -49,10 +49,6 @@ function checkConditionSnow(data) {
         if (code == snowCond[j]) {
             console.log("Snow");
             newYork.push(data.forecast.forecastday[0].date)
-            // console.log(snowyDays.includes(data.forecast.forecastday[0].date))
-            // if(snowyDays.includes(data.forecast.forecastday[0].date) === false) {
-            //     snowyDays.push(data.forecast.forecastday[0].date)
-            // };
         } else {
             console.log("no condition met")
         }
@@ -84,21 +80,6 @@ function checkTempHot(data) {
     };
 }
 
-// function checkWeatherCond(data) {
-//     if (weatherVal === "null") {
-//         alert("you must choose a weather condition")
-//     }
-//     if(choice.getAttribute("id") === "hot") {
-//         checkTemp(data)
-//     } else if(choice.getAttribute("id") === "cold") {
-//         checkTemp(data)
-//     } else if(choice.getAttribute("id") === "rainy") {
-//         checkConditionRain(data);
-//     } else if(choice.getAttribute("id") === "snow") {
-//         checkConditionSnow(data)
-//     }
-// }
-
 //  Stocks Functions
 
 // this function will append the date to the html
@@ -114,7 +95,6 @@ function getDates(data) {
         
         if(stockDates.includes(newYork[i])) {
             $(`#${data["Meta Data"]["2. Symbol"]}`).append(`<h1>${newYork[i]}</h1>`);
-            // $("#content3").append(data["Time Series (Daily)"][newYork[i][".1 open"]]);
             $(`#${data["Meta Data"]["2. Symbol"]}`).append(`<h5>open:${data["Time Series (Daily)"][newYork[i]]["1. open"]}</h5>`);
             $(`#${data["Meta Data"]["2. Symbol"]}`).append(`<h5>close:${data["Time Series (Daily)"][newYork[i]]["4. close"]}</h5>`);
         }
@@ -131,33 +111,9 @@ async function getStocks() {
             console.log(data)
             $(".card").append(`<div id = ${data["Meta Data"]["2. Symbol"]}><h1>${data["Meta Data"]["2. Symbol"]}</h1></div>`);
             getDates(data)
-            // storeStocks(data)
         })
     }
 }
-
-// function storeStocks(data) {
-//     var stockDates = Object.keys(data["Time Series (Daily)"]).slice(0, 7);
-//     $("#past-stocks").empty()
-//     for(var i = 0; i<stockDates.length; i++) {
-//         $("#past-stocks").append(`<li><button>${stockDates[i]}</button></li>`)
-//     }
-//     console.log(stockDates)
-//     for(var i = 0; i<stocks.length; i++) {
-//         console.log(stocks[i])
-//         for(var j =0; j <stockDates.length; j++) {
-//             var stockKey = data["Meta Data"]["2. Symbol"] + " " + stockDates[j];
-//             var dailyValues = data["Time Series (Daily)"][stockDates[j]]
-//             localStorage.setItem(stockKey, JSON.stringify(dailyValues))
-//         }
-//     }
-// }
-
-// function historyData(event) {
-//     event.preventDeafault();
-    
-
-// }
 
 // Display functions
 function storeLastCall() {
@@ -199,11 +155,8 @@ async function displayResults(event) {
                 storeLastCall()
                 console.log("snowy!")
             }
-            // storeLastCall()
         })
-        // storeLastCall()
     }
-    // storeLastCall()
 }
 
 
@@ -211,16 +164,6 @@ function init() {
     var storedResult = JSON.parse(localStorage.getItem("lastSearch"));
     $(".card").append(storedResult)
 }
-// function displayHistory(event) {
-//     event.preventDefault();
-    
-
-// }
-
-// Event Listeners
-// storeLastCall()
-// init()
 
 $(".genData").on("click", displayResults)
-// $(".weatherParam").on("click", getStocks)
 init()
