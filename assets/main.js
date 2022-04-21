@@ -200,11 +200,11 @@ async function displayResults(event) {
                 checkConditionSnow(data)
                 storeLastCall()
                 console.log("snowy!")
-            }
+         
             // storeLastCall()
-        })
+        }
         // storeLastCall()
-    }
+    })
     // storeLastCall()
 }
 
@@ -213,10 +213,10 @@ function displayHistory(event) {
 }
 
 
-
 function init() {
     var storedResult = JSON.parse(localStorage.getItem("lastSearch"));
     $(".card").append(storedResult)
+
 }
 // function displayHistory(event) {
 //     event.preventDefault();
@@ -224,11 +224,11 @@ function init() {
 
 // }
 
-
 // Event Listeners
 // storeLastCall()
 // init()
 
-$(".genData").on("click", displayResults);
+$(".genData").on("click", displayResults);{
+    init()
+}
 // $(".weatherParam").on("click", getStocks)
-init()
