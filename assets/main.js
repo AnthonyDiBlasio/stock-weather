@@ -19,12 +19,9 @@ var params = {
     sym: "&symbol=",
     func: "function=TIME_SERIES_DAILY",
 }
-
 //  Weather Functions
-
 rainCond = [1030, 1063, 1087, 1150, 1153, 1180, 1183, 1186, 1189, 1192, 1195, 1240, 1243, 1246, 1273, 1276]
 snowCond =[1066, 1069, 1072, 1114, 1117, 1147, 1168, 1171, 1198, 1201, 1204, 1207, 1210, 1213, 1216, 1219, 1222, 1225, 1237, 1249, 1252, 1255, 1258, 1261, 1264, 1279, 1282]
-
 function checkConditionRain(data) {
     var code = data.forecast.forecastday[0].day.condition.code;
     rainyDays=[]
@@ -39,9 +36,8 @@ function checkConditionRain(data) {
         } else {
             console.log("no condition met")
         }
-    } 
+    }
 };
-
 function checkConditionSnow(data) {
     snowyDays=[]
     var code = data.forecast.forecastday[0].day.condition.code;
@@ -49,69 +45,41 @@ function checkConditionSnow(data) {
         if (code == snowCond[j]) {
             console.log("Snow");
             newYork.push(data.forecast.forecastday[0].date)
-            // console.log(snowyDays.includes(data.forecast.forecastday[0].date))
-            // if(snowyDays.includes(data.forecast.forecastday[0].date) === false) {
-            //     snowyDays.push(data.forecast.forecastday[0].date)
-            // };
         } else {
             console.log("no condition met")
         }
     }
     return
 };
-
 function checkTempCold(data) {
     hotDays=[]
     coldDays=[]
     var temp =data.forecast.forecastday[0].day.avgtemp_f
-    if (temp < 70) {
+    if (temp < 60) {
         console.log("Cold");
         newYork.push(data.forecast.forecastday[0].date)
     } else {
         console.log("no condition met")
     };
 }
-
 function checkTempHot(data) {
     hotDays=[]
     coldDays=[]
     var temp =data.forecast.forecastday[0].day.avgtemp_f
-    if(temp > 70) {
+    if(temp > 60) {
         console.log("Hot");
         newYork.push(data.forecast.forecastday[0].date)
     } else {
         console.log("no condition met")
     };
 }
-
-// function checkWeatherCond(data) {
-//     if (weatherVal === "null") {
-//         alert("you must choose a weather condition")
-//     }
-//     if(choice.getAttribute("id") === "hot") {
-//         checkTemp(data)
-//     } else if(choice.getAttribute("id") === "cold") {
-//         checkTemp(data)
-//     } else if(choice.getAttribute("id") === "rainy") {
-//         checkConditionRain(data);
-//     } else if(choice.getAttribute("id") === "snow") {
-//         checkConditionSnow(data)
-//     }
-// }
-
 //  Stocks Functions
-
 // this function will append the date to the html
-
 //  *** Cal edit ***
-
 var stocks = ["JPM", "VZ", "C", "MET", "PFE"]
-
-
 function getDates(data) {
     stockDates = Object.keys(data["Time Series (Daily)"])
     for(var i =0; i < newYork.length; i++) {
-        
         if(stockDates.includes(newYork[i])) {
             $(`#${data["Meta Data"]["2. Symbol"]}`).append(`<h1>${newYork[i]}</h1>`);
             // $("#content3").append(data["Time Series (Daily)"][newYork[i][".1 open"]]);
@@ -120,7 +88,6 @@ function getDates(data) {
         }
     }
 }
-
 async function getStocks() {
     for(var i = 0; i<stocks.length; i++){
         await fetch(stockUrl + params.func+ params.sym + stocks[i] + params.apiKey + apiKey4)
@@ -135,38 +102,12 @@ async function getStocks() {
         })
     }
 }
-
-// function storeStocks(data) {
-//     var stockDates = Object.keys(data["Time Series (Daily)"]).slice(0, 7);
-//     $("#past-stocks").empty()
-//     for(var i = 0; i<stockDates.length; i++) {
-//         $("#past-stocks").append(`<li><button>${stockDates[i]}</button></li>`)
-//     }
-//     console.log(stockDates)
-//     for(var i = 0; i<stocks.length; i++) {
-//         console.log(stocks[i])
-//         for(var j =0; j <stockDates.length; j++) {
-//             var stockKey = data["Meta Data"]["2. Symbol"] + " " + stockDates[j];
-//             var dailyValues = data["Time Series (Daily)"][stockDates[j]]
-//             localStorage.setItem(stockKey, JSON.stringify(dailyValues))
-//         }
-//     }
-// }
-
-// function historyData(event) {
-//     event.preventDeafault();
-    
-
-// }
-
 // Display functions
 function storeLastCall() {
     var result = $(".card").get(0).outerHTML;
     localStorage.setItem("lastSearch", JSON.stringify(result));
 }
-
 var newYork= []
-
 async function displayResults(event) {
     event.preventDefault();
     choice = event.target;
@@ -205,22 +146,10 @@ async function displayResults(event) {
     }
     // storeLastCall()
 }
-
-
 function init() {
     var storedResult = JSON.parse(localStorage.getItem("lastSearch"));
     $(".card").append(storedResult)
 }
-// function displayHistory(event) {
-//     event.preventDefault();
-    
-
-// }
-
-// Event Listeners
-// storeLastCall()
-// init()
-
 $(".genData").on("click", displayResults)
 // $(".weatherParam").on("click", getStocks)
 init()
