@@ -18,12 +18,9 @@ var params = {
     sym: "&symbol=",
     func: "function=TIME_SERIES_DAILY",
 }
-
 //  Weather Functions
-
 rainCond = [1030, 1063, 1087, 1150, 1153, 1180, 1183, 1186, 1189, 1192, 1195, 1240, 1243, 1246, 1273, 1276]
 snowCond =[1066, 1069, 1072, 1114, 1117, 1147, 1168, 1171, 1198, 1201, 1204, 1207, 1210, 1213, 1216, 1219, 1222, 1225, 1237, 1249, 1252, 1255, 1258, 1261, 1264, 1279, 1282]
-
 function checkConditionRain(data) {
     var code = data.forecast.forecastday[0].day.condition.code;
     rainyDays=[]
@@ -53,7 +50,7 @@ function checkConditionSnow(data) {
             //     snowyDays.push(data.forecast.forecastday[0].date)
             // };
         } else {
-            console.log("no condition met")
+            modal.style.display = "block";
         }
     }
     return
@@ -67,7 +64,28 @@ function checkTempCold(data) {
         console.log("Cold");
         newYork.push(data.forecast.forecastday[0].date)
     } else {
-        console.log("no condition met")
+     // Get the modal
+var modal = document.getElementById("myModal");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on the button, open the modal
+$(".genData").onclick = function() {
+  modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.on = function() {
+  modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
     };
 }
 
@@ -87,22 +105,6 @@ function checkTempHot(data) {
 //     if (weatherVal === "null") {
 //         alert("you must choose a weather condition")
 //     }
-//     if(choice.getAttribute("id") === "hot") {
-//         checkTemp(data)
-//     } else if(choice.getAttribute("id") === "cold") {
-//         checkTemp(data)
-//     } else if(choice.getAttribute("id") === "rainy") {
-//         checkConditionRain(data);
-//     } else if(choice.getAttribute("id") === "snow") {
-//         checkConditionSnow(data)
-//     }
-// }
-
-//  Stocks Functions
-
-// this function will append the date to the html
-
-//  *** Cal edit ***
 
 var stocks = ["JPM", "VZ", "C", "MET", "PFE"]
 
@@ -192,29 +194,16 @@ function displayResults(event) {
                 checkConditionSnow(data)
                 console.log("snowy!")
             }
-
-            
-            // console.log(data)
-            // checkWeatherCond(data);
-            // console.log(coldDays);
-            // console.log(choice)
-            // if(choice.getAttribute("id") === "hot") {
-            //     console.log("It's hot!!!")
-            // }
-
         })
     }
     // getStocks()
     // $(".weatherParam").on("click", getStocks)
 }
-
 function displayHistory(event) {
     event.preventDefault();
-    
-
 }
 
 // Event Listeners
 
-$(".genData").on("click", displayResults)
+$(".genData").on("click", displayResults);
 // $(".weatherParam").on("click", getStocks)
