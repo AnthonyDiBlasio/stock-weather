@@ -1,5 +1,6 @@
 var stockUrl = "https://www.alphavantage.co/query?"
 var subBtn = $("#submitBtn");
+var apiKey4 = "EOSD65H8WUJT4FN6"
 var apiKey3 = "1IJ0ELIHP9MOU66R"
 var apiKey2= "BJHAE5GE3G9E1K2J"
 var apiKey = "U10T2CB0VFD6519Q"
@@ -120,11 +121,9 @@ function getDates(data) {
     }
 }
 
-function getStocks() {
-    // event.preventDefault()
-    // var stocks = ["JPM", "VZ", "C", "MET", "PFE"]
+async function getStocks() {
     for(var i = 0; i<stocks.length; i++){
-        fetch(stockUrl + params.func+ params.sym + stocks[i] + params.apiKey + apiKey2)
+        await fetch(stockUrl + params.func+ params.sym + stocks[i] + params.apiKey + apiKey4)
         .then(function (response) {
             return response.json();
         })
@@ -132,39 +131,43 @@ function getStocks() {
             console.log(data)
             $(".card").append(`<div id = ${data["Meta Data"]["2. Symbol"]}><h1>${data["Meta Data"]["2. Symbol"]}</h1></div>`);
             getDates(data)
-            storeStocks(data)
+            // storeStocks(data)
         })
     }
 }
 
-function storeStocks(data) {
-    var stockDates = Object.keys(data["Time Series (Daily)"]).slice(0, 7);
-    $("#past-stocks").empty()
-    for(var i = 0; i<stockDates.length; i++) {
-        $("#past-stocks").append(`<li><button>${stockDates[i]}</button></li>`)
-    }
-    console.log(stockDates)
-    for(var i = 0; i<stocks.length; i++) {
-        console.log(stocks[i])
-        for(var j =0; j <stockDates.length; j++) {
-            var stockKey = data["Meta Data"]["2. Symbol"] + " " + stockDates[j];
-            var dailyValues = data["Time Series (Daily)"][stockDates[j]]
-            localStorage.setItem(stockKey, JSON.stringify(dailyValues))
-        }
-    }
-}
+// function storeStocks(data) {
+//     var stockDates = Object.keys(data["Time Series (Daily)"]).slice(0, 7);
+//     $("#past-stocks").empty()
+//     for(var i = 0; i<stockDates.length; i++) {
+//         $("#past-stocks").append(`<li><button>${stockDates[i]}</button></li>`)
+//     }
+//     console.log(stockDates)
+//     for(var i = 0; i<stocks.length; i++) {
+//         console.log(stocks[i])
+//         for(var j =0; j <stockDates.length; j++) {
+//             var stockKey = data["Meta Data"]["2. Symbol"] + " " + stockDates[j];
+//             var dailyValues = data["Time Series (Daily)"][stockDates[j]]
+//             localStorage.setItem(stockKey, JSON.stringify(dailyValues))
+//         }
+//     }
+// }
 
-function historyData(event) {
-    event.preventDeafault();
+// function historyData(event) {
+//     event.preventDeafault();
     
 
-}
+// }
 
 // Display functions
+function storeLastCall() {
+    var result = $(".card").get(0).outerHTML;
+    localStorage.setItem("lastSearch", JSON.stringify(result));
+}
 
 var newYork= []
 
-function displayResults(event) {
+async function displayResults(event) {
     event.preventDefault();
     choice = event.target;
     console.log(choice)
@@ -174,47 +177,50 @@ function displayResults(event) {
     var weatherURL = `http://api.weatherapi.com/v1/history.json?key=9b478461b78c4e22b3e04825221204&q=new york}`
     getStocks()
     for(var i = 6; i > 0; i--) {
-        fetch(weatherURL + `&dt=${moment().subtract(i, "day").format("YYYY-MM-DD")}`)
+        await fetch(weatherURL + `&dt=${moment().subtract(i, "day").format("YYYY-MM-DD")}`)
         .then(function(response) {
             return response.json();
         })
         .then(function(data){
             if(choice.getAttribute("id") === "hot") {
                 checkTempHot(data)
+                storeLastCall()
                 console.log("hot!")
             } else if(choice.getAttribute("id") === "cold") {
                 checkTempCold(data)
+                storeLastCall()
                 console.log("cold!")
             } else if(choice.getAttribute("id") === "rainy") {
                 checkConditionRain(data);
+                storeLastCall()
                 console.log("rainy!")
             } else if(choice.getAttribute("id") === "snow") {
                 checkConditionSnow(data)
+                storeLastCall()
                 console.log("snowy!")
             }
-
-            
-            // console.log(data)
-            // checkWeatherCond(data);
-            // console.log(coldDays);
-            // console.log(choice)
-            // if(choice.getAttribute("id") === "hot") {
-            //     console.log("It's hot!!!")
-            // }
-
+            // storeLastCall()
         })
+        // storeLastCall()
     }
-    // getStocks()
-    // $(".weatherParam").on("click", getStocks)
+    // storeLastCall()
 }
 
-function displayHistory(event) {
-    event.preventDefault();
+
+function init() {
+    var storedResult = JSON.parse(localStorage.getItem("lastSearch"));
+    $(".card").append(storedResult)
+}
+// function displayHistory(event) {
+//     event.preventDefault();
     
 
-}
+// }
 
 // Event Listeners
+// storeLastCall()
+// init()
 
 $(".genData").on("click", displayResults)
 // $(".weatherParam").on("click", getStocks)
+init()
