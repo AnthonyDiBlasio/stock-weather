@@ -29,9 +29,7 @@ body {
       #hot:hover, #cold:hover, #snow:hover, #rainy:hover{
         background-color: bisque;
       }
-      
-        #hot, #cold, #rainy, #snow
-        {
+         #hot, #cold, #rainy, #snow{
           width: calc(23.5%);
           height: 50px;
           padding: 15px;
@@ -39,16 +37,15 @@ body {
           margin: 10px;
           border-radius: 25px;
           font-weight: 900;
-          font 
          
         }
-      p{
+       p{
         font-family: 'Courier New', Courier, monospace;
         font-style: normal;
         font-size: larger;
-      }
+      } 
     #stocksBtns{
       
       margin: 10px;
-    }
-  
+    } 
+   

@@ -36,9 +36,8 @@ function checkConditionRain(data) {
         } else {
             console.log("no condition met")
         }
-    } 
+    }
 };
-
 function checkConditionSnow(data) {
     snowyDays=[]
     var code = data.forecast.forecastday[0].day.condition.code;
@@ -47,60 +46,48 @@ function checkConditionSnow(data) {
             console.log("Snow");
             newYork.push(data.forecast.forecastday[0].date)
         } else {
-           console.log("no condition met")
+            console.log("no condition met")
         }
     }
     return
 };
-
 function checkTempCold(data) {
     hotDays=[]
     coldDays=[]
     var temp =data.forecast.forecastday[0].day.avgtemp_f
-    if (temp < 70) {
+    if (temp < 60) {
         console.log("Cold");
         newYork.push(data.forecast.forecastday[0].date)
     } else {
-     console.log("no condition met");
-    }
+        console.log("no condition met")
+    };
 }
-
 function checkTempHot(data) {
     hotDays=[]
     coldDays=[]
     var temp =data.forecast.forecastday[0].day.avgtemp_f
-    if(temp > 70) {
+    if(temp > 60) {
         console.log("Hot");
         newYork.push(data.forecast.forecastday[0].date)
     } else {
         console.log("no condition met")
     };
 }
-
 //  Stocks Functions
-
 // this function will append the date to the html
-
 //  *** Cal edit ***
-
-
-
-
 var stocks = ["JPM", "VZ", "C", "MET", "PFE"]
-
-
 function getDates(data) {
     stockDates = Object.keys(data["Time Series (Daily)"])
     for(var i =0; i < newYork.length; i++) {
-        
         if(stockDates.includes(newYork[i])) {
             $(`#${data["Meta Data"]["2. Symbol"]}`).append(`<h1>${newYork[i]}</h1>`);
+            // $("#content3").append(data["Time Series (Daily)"][newYork[i][".1 open"]]);
             $(`#${data["Meta Data"]["2. Symbol"]}`).append(`<h5>open:${data["Time Series (Daily)"][newYork[i]]["1. open"]}</h5>`);
             $(`#${data["Meta Data"]["2. Symbol"]}`).append(`<h5>close:${data["Time Series (Daily)"][newYork[i]]["4. close"]}</h5>`);
         }
     }
 }
-
 async function getStocks() {
     for(var i = 0; i<stocks.length; i++){
         await fetch(stockUrl + params.func+ params.sym + stocks[i] + params.apiKey + apiKey4)
@@ -111,18 +98,16 @@ async function getStocks() {
             console.log(data)
             $(".card").append(`<div id = ${data["Meta Data"]["2. Symbol"]}><h1>${data["Meta Data"]["2. Symbol"]}</h1></div>`);
             getDates(data)
+            // storeStocks(data)
         })
     }
 }
-
 // Display functions
 function storeLastCall() {
     var result = $(".card").get(0).outerHTML;
     localStorage.setItem("lastSearch", JSON.stringify(result));
 }
-
 var newYork= []
-
 async function displayResults(event) {
     event.preventDefault();
     choice = event.target;
@@ -154,24 +139,17 @@ async function displayResults(event) {
                 checkConditionSnow(data)
                 storeLastCall()
                 console.log("snowy!")
-
             }
+            // storeLastCall()
         })
+        // storeLastCall()
     }
+    // storeLastCall()
 }
-
-function displayHistory(event) {
-    event.preventDefault();
-
-
-
 function init() {
     var storedResult = JSON.parse(localStorage.getItem("lastSearch"));
     $(".card").append(storedResult)
-
 }
-
-
 $(".genData").on("click", displayResults)
+// $(".weatherParam").on("click", getStocks)
 init()
-}
