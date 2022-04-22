@@ -87,9 +87,12 @@ async function getStocks() {
             return response.json();
         })
         .then(function (data) {
-           if(newYork.length>0) {
-             $(".card").append(`<div class ="box" id =${data["Meta Data"]["2. Symbol"]}><h1>${data["Meta Data"]["2. Symbol"]}</h1></div>`);
-            getDates(data)
+            stockDates = Object.keys(data["Time Series (Daily)"])
+            console.log(stockDates)
+            for(var i = newYork.length-1; i < newYork.length; i++)
+            if(stockDates.includes(newYork[i])) {
+                $(".card").append(`<div class ="box" id =${data["Meta Data"]["2. Symbol"]}><h1>${data["Meta Data"]["2. Symbol"]}</h1></div>`);
+                getDates(data)
            }
         })
     }
@@ -133,8 +136,7 @@ async function displayResults(event) {
 
         $(".card").append(` <div class="notification">
             <button class="delete"></button>
-            Lorem ipsum dolor sit amet, consectetur
-            adipiscing elit lorem ipsum dolor. <strong>Pellentesque risus mi</strong>, tempus quis placerat ut, porta nec nulla. Vestibulum rhoncus ac ex sit amet fringilla. Nullam gravida purus diam, et dictum <a>felis venenatis</a> efficitur.
+            The data for this weather type is unavailable! Please try another weather type.
           </div>
           `)
     }
