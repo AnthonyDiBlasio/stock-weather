@@ -21,8 +21,9 @@ body {
     .card{
       /* background-color: rgba(219, 102, 240, 0.719); */
      height: 65%;
-      justify-content: flex-end;
       font-weight: 300;
+      display: flex;
+      
     }
       
       #hot:hover, #cold:hover, #snow:hover, #rainy:hover{

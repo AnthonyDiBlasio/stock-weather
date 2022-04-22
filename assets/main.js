@@ -112,7 +112,7 @@ function getDates(data) {
 }
 async function getStocks() {
     for(var i = 0; i<stocks.length; i++){
-        await fetch(stockUrl + params.func+ params.sym + stocks[i] + params.apiKey + apiKey)
+        await fetch(stockUrl + params.func+ params.sym + stocks[i] + params.apiKey + apiKey4)
         .then(function (response) {
             return response.json();
         })
@@ -169,6 +169,7 @@ async function displayResults(event) {
         // storeLastCall()
     }
     if (newYork===0){
+
         $(".card").append(` <div class="notification">
             <button class="delete"></button>
             Lorem ipsum dolor sit amet, consectetur
