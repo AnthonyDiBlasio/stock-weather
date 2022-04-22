@@ -168,7 +168,8 @@ async function displayResults(event) {
         })
         // storeLastCall()
     }
-    if (newYork.length===0){
+    if (newYork===0){
+
         $(".card").append(` <div class="notification">
             <button class="delete"></button>
             Lorem ipsum dolor sit amet, consectetur
