@@ -3,12 +3,14 @@ body {
     font-family: "Goudy Bookletter 1911", sans-serif;
       font-size: 15px;
       
-      height: 950px;
+      /* height: 950px; */
       padding: 5%;
       width: 100%;
+      background-color: rgba(4, 4, 36, 0.384);
   }
     .header {
-    background: rgb(114, 182, 214);
+
+    background: rgb(230, 238, 241);
     height: 100px;
     font-size: x-large;
     font-weight: 700;
@@ -16,12 +18,22 @@ body {
     padding: 10px;
     margin: 15px;
     border-radius: 20px;
-    display: block;
     }
     
+    .about {
+      background: rgb(231, 235, 236);
+      /* height: px; */
+      font-size: x-large;
+      font-weight: 700;
+      text-align: center;
+      padding: 10px;
+      margin: 15px;
+      border-radius: 20px;
+      
+      }
     .card{
       /* background-color: rgba(219, 102, 240, 0.719);  */
-      height: 65%;
+      height: 65vh;
       font-weight: 300;
       display: flex;
       
@@ -31,7 +43,7 @@ body {
         background-color: bisque;
       }
          #hot, #cold, #rainy, #snow{
-          width: calc(23.5%);
+          /* width: calc(23.5%); */
           height: 50px;
           padding: 15px;
           border: 50px;
@@ -44,9 +56,21 @@ body {
         font-family: 'Courier New', Courier, monospace;
         font-style: normal;
         font-size: larger;
+        
+       
       } 
     #stocksBtns{
       
       margin: 10px;
     } 
-   
+    @media screen and (max-width: 480px) {
+      body {
+        background-color: lightgreen;
+      }
+    }
+    @media screen and (max-width: 1280px) {
+      body {
+        background-color: rgb(245, 91, 91);
+      }
+    }
+    

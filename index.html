@@ -1,31 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
-    <link rel="stylesheet" href="./assets/style.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
+    />
+    <link rel="stylesheet" href="./assets/style.css" />
     <title>Stock-Weather</title>
-</head>
-<header class="header">MIST</header>
-<body>
+  </head>
   
-    <div class="about">About
-        <p>The app MIST is designed to get feedback on how New Yorkers are feeling about investing related to the weather types displayed. Please click a weather type to begin.</p>
+  <body>
+    <header class="header">MIST</header>
+    <div class="about">
+      About
+      <p>
+        The app MIST is designed to get feedback on how New Yorkers are feeling
+        about investing related to the weather types displayed. Please click a
+        weather type to begin.
+      </p>
     </div>
 
-    <div id = stocksBtns class="weatherParam">
-              <button class="genData button is-primary" id ="hot" value="hot">Hot</button>
-              <button class="genData button is-primary" id="cold" value="cold">Cold</button>
-              <button class="genData button is-primary" id="rainy" value="rainy">Rainy</button>
-              <button class="genData button is-primary" id ="snow" value="snow">Snow</button>       
+
+    <div id="stocksBtns" class="weatherParam columns is-mobile">
+      <button class="genData button is-primary column" id="hot" value="hot">
+        Hot
+      </button>
+      <button class="genData button is-primary column" id="cold" value="cold">
+        Cold
+      </button>
+      <button class="genData button is-primary column" id="rainy" value="rainy">
+        Rainy
+      </button>
+      <button class="genData button is-primary column" id="snow" value="snow">
+        Snow
+      </button>
+
     </div>
-    <div class = "card"></div>
-    
+    <div class="card"></div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="./assets/main.js"></script>
-</body>
+  </body>
 </html>
-
