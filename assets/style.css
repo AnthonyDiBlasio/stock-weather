@@ -7,7 +7,7 @@ body {
       padding: 5%;
       width: 100%;
   }
-    .header, .about {
+    .header {
     background: rgb(114, 182, 214);
     height: 100px;
     font-size: x-large;
@@ -17,7 +17,6 @@ body {
     margin: 15px;
     border-radius: 20px;
     display: block;
-    display: flex;
     }
     
     .card{
