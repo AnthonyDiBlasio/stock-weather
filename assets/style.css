@@ -7,7 +7,7 @@ body {
       padding: 5%;
       width: 100%;
   }
-    .header,.about {
+    .header, .about {
     background: rgb(114, 182, 214);
     height: 100px;
     font-size: x-large;
@@ -16,15 +16,17 @@ body {
     padding: 10px;
     margin: 15px;
     border-radius: 20px;
+    display: block;
+    display: flex;
     }
     
     .card{
-      /* background-color: rgba(219, 102, 240, 0.719); */
-     height: 65%;
+      /* background-color: rgba(219, 102, 240, 0.719);  */
+      height: 65%;
       font-weight: 300;
       display: flex;
       
-    }
+    } 
       
       #hot:hover, #cold:hover, #snow:hover, #rainy:hover{
         background-color: bisque;
