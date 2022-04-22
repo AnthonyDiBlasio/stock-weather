@@ -80,9 +80,9 @@ function getDates(data) {
     }
 }
 
-async function getStocks() {
+ function getStocks() {
     for(var i = 0; i<stocks.length; i++){
-        await fetch(stockUrl + params.func+ params.sym + stocks[i] + params.apiKey + apiKey4)
+         fetch(stockUrl + params.func+ params.sym + stocks[i] + params.apiKey + apiKey4)
         .then(function (response) {
             return response.json();
         })
@@ -103,7 +103,7 @@ function storeLastCall() {
     localStorage.setItem("lastSearch", JSON.stringify(result));
 }
 var newYork= []
-async function displayResults(event) {
+ function displayResults(event) {
     event.preventDefault();
     choice = event.target;
     $(".card").empty();
@@ -111,7 +111,7 @@ async function displayResults(event) {
     var weatherURL = `https://api.weatherapi.com/v1/history.json?key=9b478461b78c4e22b3e04825221204&q=new york}`
     getStocks();
     for(var i = 6; i > 0; i--) {
-        await fetch(weatherURL + `&dt=${moment().subtract(i, "day").format("YYYY-MM-DD")}`)
+         fetch(weatherURL + `&dt=${moment().subtract(i, "day").format("YYYY-MM-DD")}`)
         .then(function(response) {
             return response.json();
         })
@@ -131,14 +131,14 @@ async function displayResults(event) {
             }
         })
     }
-    if ($(".card")[0].innerHTML === ""){
+    if ($(".card")[0].innerHTML === "") {
 
         $(".card").append(` <div class="notification">
             <button class="delete"></button>
             The data for this weather type is unavailable! Please try another weather type.
           </div>
           `)
-    }
+    }return;
 }
 
 function init() {
