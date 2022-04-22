@@ -1,7 +1,8 @@
+
 body {
     font-family: "Goudy Bookletter 1911", sans-serif;
       font-size: 15px;
-      background-color: rgba(77, 94, 185, 0.966);
+      
       height: 950px;
       padding: 5%;
       width: 100%;
@@ -15,12 +16,10 @@ body {
     padding: 10px;
     margin: 15px;
     border-radius: 20px;
-    
-      
     }
     
     .card{
-      background-color: rgba(219, 102, 240, 0.719);
+      /* background-color: rgba(219, 102, 240, 0.719); */
      height: 65%;
       justify-content: flex-end;
       font-weight: 300;
