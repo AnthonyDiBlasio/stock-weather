@@ -118,9 +118,11 @@ async function getStocks() {
         })
         .then(function (data) {
             console.log(data)
-            $(".card").append(`<div class ="box" id =${data["Meta Data"]["2. Symbol"]}><h1>${data["Meta Data"]["2. Symbol"]}</h1></div>`);
+           if(newYork.length>0) {
+             $(".card").append(`<div class ="box" id =${data["Meta Data"]["2. Symbol"]}><h1>${data["Meta Data"]["2. Symbol"]}</h1></div>`);
             getDates(data)
             // storeStocks(data)
+           }
         })
     }
 }
