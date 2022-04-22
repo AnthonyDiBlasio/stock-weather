@@ -87,9 +87,12 @@ async function getStocks() {
             return response.json();
         })
         .then(function (data) {
-           if(newYork.length>0) {
-             $(".card").append(`<div class ="box" id =${data["Meta Data"]["2. Symbol"]}><h1>${data["Meta Data"]["2. Symbol"]}</h1></div>`);
-            getDates(data)
+            stockDates = Object.keys(data["Time Series (Daily)"])
+            console.log(stockDates)
+            for(var i = newYork.length-1; i < newYork.length; i++)
+            if(stockDates.includes(newYork[i])) {
+                $(".card").append(`<div class ="box" id =${data["Meta Data"]["2. Symbol"]}><h1>${data["Meta Data"]["2. Symbol"]}</h1></div>`);
+                getDates(data)
            }
         })
     }
