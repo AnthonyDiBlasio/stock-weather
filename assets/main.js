@@ -11,6 +11,7 @@ var weatherBtn = $(".weatherBtn");
 var weatherVal = $("#weather-types");
 var rainCond = [1030, 1063, 1087, 1150, 1153, 1180, 1183, 1186, 1189, 1192, 1195, 1240, 1243, 1246, 1273, 1276];
 var snowCond =[1066, 1069, 1072, 1114, 1117, 1147, 1168, 1171, 1198, 1201, 1204, 1207, 1210, 1213, 1216, 1219, 1222, 1225, 1237, 1249, 1252, 1255, 1258, 1261, 1264, 1279, 1282];
+var stocks = ["JPM", "VZ", "C", "MET", "PFE"]
 var newYork= [];
 var params = {
     apiKey: "&apikey=",
@@ -18,8 +19,9 @@ var params = {
     func: "function=TIME_SERIES_DAILY",
 };
 
-//  Weather Functions
+//  ***Weather Functions***
 
+// following four functions check different weather conditions by looping through rainCond and snowCond arrays or if the average temp is above or below 60 degrees
 function checkConditionRain(data) {
     var code = data.forecast.forecastday[0].day.condition.code;
     for( var i= 0; i< rainCond.length; i++) {
@@ -55,9 +57,9 @@ function checkTempHot(data) {
     }
 }
 
-//  Stocks Functions
-// this function will append the date to the html
-var stocks = ["JPM", "VZ", "C", "MET", "PFE"]
+//  ***Stock Functions***
+
+// this function will append the dates and open/close stock data to the html
 function getDates(data) {
     stockDates = Object.keys(data["Time Series (Daily)"])
     for(var i =0; i < newYork.length; i++) {
@@ -69,6 +71,7 @@ function getDates(data) {
     }
 }
 
+// fetch the stock API and loop through the five stocks to append the stock symbol to the html then call detDates to append relative data to each stock card
 async function getStocks() {
     for(var i = 0; i<stocks.length; i++){
         await fetch(stockUrl + params.func+ params.sym + stocks[i] + params.apiKey + apiKey4)
@@ -86,21 +89,29 @@ async function getStocks() {
     }
 }
 
-// Display functions
+// ***Local Storage***
 
+// store and call the last result to the page from local storage
 function storeLastCall() {
     var result = $(".card").get(0).outerHTML;
     localStorage.setItem("lastSearch", JSON.stringify(result));
     console.log(result);
 }
 
+function init() {
+    var storedResult = JSON.parse(localStorage.getItem("lastSearch"));
+    $(".card").append(storedResult)
+}
+
+// ***Display Functions***
+
+// function fetches the Weatheer API then check which condition was selected.  The stock functions are comapred to the weather condition to display relative results.
 async function displayResults(event) {
     event.preventDefault();
     choice = event.target;
     $(".card").empty();
     newYork= [];
     var weatherURL = `https://api.weatherapi.com/v1/history.json?key=9b478461b78c4e22b3e04825221204&q=new york}`
-    // getStocks();
     for(var i = 6; i > 0; i--) {
         await fetch(weatherURL + `&dt=${moment().subtract(i, "day").format("YYYY-MM-DD")}`)
         .then(function(response) {
@@ -138,10 +149,7 @@ async function displayResults(event) {
     }, 5000);
 }
 
-function init() {
-    var storedResult = JSON.parse(localStorage.getItem("lastSearch"));
-    $(".card").append(storedResult)
-}
+// ***Event Listeners***
 
 $(".genData").on("click", displayResults)
 
