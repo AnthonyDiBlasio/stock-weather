@@ -1,21 +1,22 @@
-var stockUrl = "https://www.alphavantage.co/query?"
-var apiKey4 = "EOSD65H8WUJT4FN6"
-var apiKey3 = "1IJ0ELIHP9MOU66R"
-var apiKey2= "BJHAE5GE3G9E1K2J"
-var apiKey = "U10T2CB0VFD6519Q"
+var stockUrl = "https://www.alphavantage.co/query?";
+var apiKey4 = "EOSD65H8WUJT4FN6";
+var apiKey3 = "1IJ0ELIHP9MOU66R";
+var apiKey2= "BJHAE5GE3G9E1K2J";
+var apiKey = "U10T2CB0VFD6519Q";
 var hot = $("#hot");
 var cold = $("#cold");
 var rainy = $("#rainy");
 var snow = $("#snow");
 var weatherBtn = $(".weatherBtn");
 var weatherVal = $("#weather-types");
-var rainCond = [1030, 1063, 1087, 1150, 1153, 1180, 1183, 1186, 1189, 1192, 1195, 1240, 1243, 1246, 1273, 1276]
-var snowCond =[1066, 1069, 1072, 1114, 1117, 1147, 1168, 1171, 1198, 1201, 1204, 1207, 1210, 1213, 1216, 1219, 1222, 1225, 1237, 1249, 1252, 1255, 1258, 1261, 1264, 1279, 1282]
+var rainCond = [1030, 1063, 1087, 1150, 1153, 1180, 1183, 1186, 1189, 1192, 1195, 1240, 1243, 1246, 1273, 1276];
+var snowCond =[1066, 1069, 1072, 1114, 1117, 1147, 1168, 1171, 1198, 1201, 1204, 1207, 1210, 1213, 1216, 1219, 1222, 1225, 1237, 1249, 1252, 1255, 1258, 1261, 1264, 1279, 1282];
+var newYork= [];
 var params = {
     apiKey: "&apikey=",
     sym: "&symbol=",
     func: "function=TIME_SERIES_DAILY",
-}
+};
 
 //  Weather Functions
 
@@ -86,11 +87,13 @@ async function getStocks() {
 }
 
 // Display functions
+
 function storeLastCall() {
     var result = $(".card").get(0).outerHTML;
     localStorage.setItem("lastSearch", JSON.stringify(result));
+    console.log(result);
 }
-var newYork= []
+
 async function displayResults(event) {
     event.preventDefault();
     choice = event.target;
@@ -106,27 +109,22 @@ async function displayResults(event) {
         .then(function(data){
             if(choice.getAttribute("id") === "hot") {
                 checkTempHot(data)
-                // storeLastCall()
             } else if(choice.getAttribute("id") === "cold") {
                 checkTempCold(data)
-                // storeLastCall()
             } else if(choice.getAttribute("id") === "rainy") {
                 checkConditionRain(data);
-                // storeLastCall()
             } else if(choice.getAttribute("id") === "snow") {
                 checkConditionSnow(data)
-                // storeLastCall()
             }
         })
     }
-    
+
     setTimeout(function() {
         getStocks();
     }, 1000);
 
     setTimeout(function() {
         if ($(".card")[0].innerHTML === ""){
-
             $(".card").append(` <div class="notification">
                 <button class="delete"></button>
                 The data for this weather type is unavailable! Please try another weather type.
@@ -135,16 +133,9 @@ async function displayResults(event) {
         }
     }, 2000);
 
-    storeLastCall()
-  
-    // if ($(".card")[0].innerHTML === ""){
-
-    //     $(".card").append(` <div class="notification">
-    //         <button class="delete"></button>
-    //         The data for this weather type is unavailable! Please try another weather type.
-    //       </div>
-    //       `)
-    // }
+    setTimeout(function() {
+        storeLastCall();
+    }, 5000);
 }
 
 function init() {
@@ -153,12 +144,12 @@ function init() {
 }
 
 $(".genData").on("click", displayResults)
+
 init()
 
 document.addEventListener('click', () => {
     (document.querySelectorAll('.notification .delete') || []).forEach(($delete) => {
       const $notification = $delete.parentNode;
-  
       $delete.addEventListener('click', () => {
         $notification.parentNode.removeChild($notification);
       });
