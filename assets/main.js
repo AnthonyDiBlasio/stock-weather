@@ -1,5 +1,4 @@
 var stockUrl = "https://www.alphavantage.co/query?"
-var subBtn = $("#submitBtn");
 var apiKey4 = "EOSD65H8WUJT4FN6"
 var apiKey3 = "1IJ0ELIHP9MOU66R"
 var apiKey2= "BJHAE5GE3G9E1K2J"
@@ -8,10 +7,6 @@ var hot = $("#hot");
 var cold = $("#cold");
 var rainy = $("#rainy");
 var snow = $("#snow");
-var hotDays = [];
-var coldDays = [];
-var rainyDays = [];
-var snowyDays = [];
 var weatherBtn = $(".weatherBtn");
 var weatherVal = $("#weather-types");
 var rainCond = [1030, 1063, 1087, 1150, 1153, 1180, 1183, 1186, 1189, 1192, 1195, 1240, 1243, 1246, 1273, 1276]
@@ -26,20 +21,17 @@ var params = {
 
 function checkConditionRain(data) {
     var code = data.forecast.forecastday[0].day.condition.code;
-    rainyDays=[]
     for( var i= 0; i< rainCond.length; i++) {
         if (code == rainCond[i]) {
             newYork.push(data.forecast.forecastday[0].date)
-        }
-        if(rainyDays.includes(data.forecast.forecastday[0].date) === false) {
-                rainyDays.push(data.forecast.forecastday[0].date)    
-        }   
+        } 
     }
+    return
 };
 
 function checkConditionSnow(data) {
-    snowyDays=[]
     var code = data.forecast.forecastday[0].day.condition.code;
+    snowyDays=[]
     for( var j = 0; j< snowCond.length; j++) {
         if (code == snowCond[j]) {
             newYork.push(data.forecast.forecastday[0].date)
@@ -49,17 +41,13 @@ function checkConditionSnow(data) {
 };
 
 function checkTempCold(data) {
-    hotDays=[]
-    coldDays=[]
     var temp =data.forecast.forecastday[0].day.avgtemp_f
-    if (temp < 60) {
+    if (temp <= 60) {
         newYork.push(data.forecast.forecastday[0].date)
     }
 }
 
 function checkTempHot(data) {
-    hotDays=[]
-    coldDays=[]
     var temp =data.forecast.forecastday[0].day.avgtemp_f
     if(temp > 60) {
         newYork.push(data.forecast.forecastday[0].date)
@@ -109,7 +97,7 @@ async function displayResults(event) {
     $(".card").empty();
     newYork= [];
     var weatherURL = `https://api.weatherapi.com/v1/history.json?key=9b478461b78c4e22b3e04825221204&q=new york}`
-    getStocks();
+    // getStocks();
     for(var i = 6; i > 0; i--) {
         await fetch(weatherURL + `&dt=${moment().subtract(i, "day").format("YYYY-MM-DD")}`)
         .then(function(response) {
@@ -118,27 +106,45 @@ async function displayResults(event) {
         .then(function(data){
             if(choice.getAttribute("id") === "hot") {
                 checkTempHot(data)
-                storeLastCall()
+                // storeLastCall()
             } else if(choice.getAttribute("id") === "cold") {
                 checkTempCold(data)
-                storeLastCall()
+                // storeLastCall()
             } else if(choice.getAttribute("id") === "rainy") {
                 checkConditionRain(data);
-                storeLastCall()
+                // storeLastCall()
             } else if(choice.getAttribute("id") === "snow") {
                 checkConditionSnow(data)
-                storeLastCall()
+                // storeLastCall()
             }
         })
     }
-    if ($(".card")[0].innerHTML === ""){
+    
+    setTimeout(function() {
+        getStocks();
+    }, 1000);
 
-        $(".card").append(` <div class="notification">
-            <button class="delete"></button>
-            The data for this weather type is unavailable! Please try another weather type.
-          </div>
-          `)
-    }
+    setTimeout(function() {
+        if ($(".card")[0].innerHTML === ""){
+
+            $(".card").append(` <div class="notification">
+                <button class="delete"></button>
+                The data for this weather type is unavailable! Please try another weather type.
+              </div>
+              `)
+        }
+    }, 2000);
+
+    storeLastCall()
+  
+    // if ($(".card")[0].innerHTML === ""){
+
+    //     $(".card").append(` <div class="notification">
+    //         <button class="delete"></button>
+    //         The data for this weather type is unavailable! Please try another weather type.
+    //       </div>
+    //       `)
+    // }
 }
 
 function init() {
